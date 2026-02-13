@@ -11,15 +11,23 @@
         android:paddingHorizontal="@dimen/global_margin">
 
         <include layout="@layout/dialog_editor_base"/>
-        <include layout="@layout/dialog_editor_input_config"/>
+
+        <CheckBox
+            android:id="@+id/editor_controls_camera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/global_margin"
+            android:text="@string/grid_layout_edit_controls_camera"
+            app:layout_constraintTop_toBottomOf="@id/editor_vert_pos_text"
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <TextView
             android:id="@+id/editor_sensitivity_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/global_margin"
-            android:text="Sensitivity"
-            app:layout_constraintTop_toBottomOf="@id/editor_moves_cursor"
+            android:text="@string/grid_layout_edit_sensitivity"
+            app:layout_constraintTop_toBottomOf="@id/editor_controls_camera"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <SeekBar

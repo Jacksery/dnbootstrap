@@ -9,14 +9,19 @@ import git.artdeell.dnbootstrap.input.LoadableButtonLayout;
 public class ControlStickData extends VisibilityConfiguration implements ViewCreator {
     public static final String TYPE = "stick";
     public LoadableButtonLayout.LayoutParams layoutParams;
-    public InputConfiguration inputConfiguration;
+    public transient InputConfiguration inputConfiguration;
+    public boolean controlsCamera;
     public float sensitivity = 0.014f;
 
-    public ControlStickData() {}
+    public ControlStickData() {
+        inputConfiguration = new InputConfiguration();
+        inputConfiguration.sticky = true;
+    }
 
     public ControlStickData(ControlStickData src) {
+        this();
         this.layoutParams = new LoadableButtonLayout.LayoutParams(src.layoutParams);
-        this.inputConfiguration = new InputConfiguration(src.inputConfiguration);
+        this.controlsCamera = src.controlsCamera;
         this.sensitivity = src.sensitivity;
         this.showInGame = src.showInGame;
         this.showInMenu = src.showInMenu;
@@ -27,10 +32,6 @@ public class ControlStickData extends VisibilityConfiguration implements ViewCre
         d.layoutParams = new LoadableButtonLayout.LayoutParams(12, 12);
         d.layoutParams.offsetHorizontal = 6;
         d.layoutParams.offsetVertical = 6;
-        d.inputConfiguration = new InputConfiguration();
-        d.inputConfiguration.movesCursor = false;
-        d.inputConfiguration.sticky = true;
-        d.sensitivity = 0.014f;
         d.showInGame = true;
         d.showInMenu = false;
         return d;

@@ -32,10 +32,10 @@ public class ControlStick extends View implements LayoutTouchConsumer, LayoutEdi
         @Override
         public void run() {
             if (!active) return;
-            if (controlStickData.inputConfiguration.movesCursor) {
-                float SENS = controlStickData.sensitivity;
-                GLFW.cursorX += stickX * SENS;
-                GLFW.cursorY += stickY * SENS;
+            if (controlStickData.controlsCamera) {
+                float sens = controlStickData.sensitivity;
+                GLFW.cursorX += stickX * sens;
+                GLFW.cursorY += stickY * sens;
                 GLFW.sendMousePos();
             } else {
                 updateMovementKeysFromStick();
@@ -48,24 +48,22 @@ public class ControlStick extends View implements LayoutTouchConsumer, LayoutEdi
         super(context);
         this.controlStickData = data;
         setLayoutParams(this.controlStickData.layoutParams);
-        init();
+        bgPaint.setColor(0x44FFFFFF);
+        thumbPaint.setColor(0xFFFFFFFF);
+        setClickable(true);
     }
 
     public ControlStick(@NonNull Context context) {
-        super(context);
-        this.controlStickData = new ControlStickData();
-        setLayoutParams(this.controlStickData.layoutParams);
-        init();
+        this(context, (AttributeSet) null);
     }
 
     public ControlStick(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        this.controlStickData = new ControlStickData();
-        setLayoutParams(this.controlStickData.layoutParams);
-        init();
+        this(context, attrs, 0);
     }
 
-    private void init() {
+    public ControlStick(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        this.controlStickData = new ControlStickData();
         bgPaint.setColor(0x44FFFFFF);
         thumbPaint.setColor(0xFFFFFFFF);
         setClickable(true);
@@ -129,8 +127,7 @@ public class ControlStick extends View implements LayoutTouchConsumer, LayoutEdi
         }
         stickX = nx;
         stickY = ny;
-        // update movement keys before tick
-        if (!controlStickData.inputConfiguration.movesCursor) updateMovementKeysFromStick();
+        if (!controlStickData.controlsCamera) updateMovementKeysFromStick();
         post(this::invalidate);
     }
 

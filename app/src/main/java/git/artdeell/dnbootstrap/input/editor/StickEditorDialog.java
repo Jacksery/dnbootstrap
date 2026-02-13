@@ -1,15 +1,18 @@
 package git.artdeell.dnbootstrap.input.editor;
 
 import android.app.Dialog;
-import android.widget.TextView;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import java.util.Locale;
 
 import git.artdeell.dnbootstrap.R;
 import git.artdeell.dnbootstrap.input.ControlStick;
+import git.artdeell.dnbootstrap.input.model.ControlStickData;
 
-public class StickEditorDialog extends InputConfigurationEditorDialog {
+public class StickEditorDialog extends LayoutEditorDialog {
+    private CheckBox controlsCameraCheck;
     private SeekBar sensitivitySeek;
     private TextView sensitivityValue;
 
@@ -18,14 +21,14 @@ public class StickEditorDialog extends InputConfigurationEditorDialog {
     }
 
     @Override
-    protected void inflate(android.app.Dialog dialog) {
+    protected void inflate(Dialog dialog) {
         super.inflate(dialog);
+        controlsCameraCheck = dialog.findViewById(R.id.editor_controls_camera);
         sensitivitySeek = dialog.findViewById(R.id.editor_sensitivity_seek);
         sensitivityValue = dialog.findViewById(R.id.editor_sensitivity_value);
         sensitivitySeek.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                float value = progress / 1000f;
-                sensitivityValue.setText(String.format(Locale.ENGLISH, "%.3f", value));
+                sensitivityValue.setText(String.format(Locale.ENGLISH, "%.3f", progress / 1000f));
             }
             @Override public void onStartTrackingTouch(SeekBar seekBar) {}
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
@@ -34,22 +37,17 @@ public class StickEditorDialog extends InputConfigurationEditorDialog {
 
     @Override
     protected void loadSettings() {
-        super.loadSettings();
-        ControlStick stick = (ControlStick) getEditTarget();
-        float sens = 0.014f;
-        if (stick.getCreator() instanceof git.artdeell.dnbootstrap.input.model.ControlStickData) {
-            sens = ((git.artdeell.dnbootstrap.input.model.ControlStickData) stick.getCreator()).sensitivity;
-        }
-        int progress = Math.round(sens * 1000f);
+        ControlStickData data = (ControlStickData) ((ControlStick) getEditTarget()).getCreator();
+        controlsCameraCheck.setChecked(data.controlsCamera);
+        int progress = Math.round(data.sensitivity * 1000f);
         sensitivitySeek.setProgress(progress);
-        sensitivityValue.setText(String.format(Locale.ENGLISH, "%.3f", sens));
+        sensitivityValue.setText(String.format(Locale.ENGLISH, "%.3f", data.sensitivity));
     }
 
     @Override
     protected void saveSettings() {
-        super.saveSettings();
-        ControlStick target = (ControlStick) getEditTarget();
-        git.artdeell.dnbootstrap.input.model.ControlStickData d = (git.artdeell.dnbootstrap.input.model.ControlStickData) target.getCreator();
-        d.sensitivity = sensitivitySeek.getProgress() / 1000f;
+        ControlStickData data = (ControlStickData) ((ControlStick) getEditTarget()).getCreator();
+        data.controlsCamera = controlsCameraCheck.isChecked();
+        data.sensitivity = sensitivitySeek.getProgress() / 1000f;
     }
 }

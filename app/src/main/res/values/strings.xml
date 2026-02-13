@@ -18,6 +18,8 @@
     <string name="grid_layout_edit_show_in_menus">Show in menus</string>
     <string name="grid_layout_edit_sticky">Sticky</string>
     <string name="grid_layout_edit_moves_cursor">Moves cursor</string>
+    <string name="grid_layout_edit_controls_camera">Controls camera</string>
+    <string name="grid_layout_edit_sensitivity">Sensitivity</string>
     <string name="grid_layout_edit_clone">Clone</string>
     <string name="grid_layout_edit_delete">Delete</string>
     <string name="grid_layout_edit_button_label">Label</string>
