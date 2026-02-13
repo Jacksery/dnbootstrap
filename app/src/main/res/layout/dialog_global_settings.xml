@@ -11,7 +11,9 @@
         android:id="@+id/editor_global_pitch_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/grid_layout_global_grid_pitch"/>
+        android:text="@string/grid_layout_global_grid_pitch"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/editor_global_pitch_view"
@@ -58,6 +60,14 @@
         android:text="@string/grid_layout_global_add_button"
         android:layout_marginTop="@dimen/global_margin"
         app:layout_constraintTop_toBottomOf="@id/editor_global_divider"/>
+
+    <Button
+        android:id="@+id/editor_global_add_stick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/grid_layout_global_add_stick"
+        android:layout_marginTop="@dimen/global_margin"
+        app:layout_constraintTop_toBottomOf="@id/editor_global_add_button"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -98,7 +98,7 @@ public class ControlLayout extends LoadableButtonLayout implements GrabListener 
             // If the current pointer is taken over by a sticky view, just update its position
             // and leave
             if(lastHit != null && lastHit.consumer.getInputConfiguration().sticky) {
-                lastHit.onTouchPosition(pointerId, x - lastHit.consumer.getLeft(), y - lastHit.consumer.getTop());
+                lastHit.onTouchPosition(pointerId, x, y);
                 return;
             }
             HitTarget newHit = hitTest((int)x, (int)y);
